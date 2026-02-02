@@ -1,3 +1,6 @@
+import Link from "next/link";
+
+
 type Pet = {
   id: number;
   title: string;
@@ -58,7 +61,36 @@ export default async function Home() {
             </li>
           ))}
         </ul>
+        
       )}
+      <Link href="/pets/new">
+  <div
+    style={{
+      position: "fixed",
+      right: 24,
+      bottom: 24,
+      width: 56,
+      height: 56,
+      borderRadius: "50%",
+      backgroundColor: "#2563eb",
+      color: "white",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: 32,
+      cursor: "pointer",
+      boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+    }}
+    title="Add Pet"
+  >
+    +
+  </div>
+</Link>
+
+
+
+
+
     </main>
   );
 }
