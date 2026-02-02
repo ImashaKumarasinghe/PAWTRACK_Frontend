@@ -6,8 +6,8 @@ type Pet = {
   title: string;
   species: string;
   description?: string | null;
-  latitude: number;
-  longitude: number;
+  location_url: string;
+  location_text?: string | null;
   status: string;
   created_at: string;
 };
@@ -51,9 +51,10 @@ export default async function Home() {
               </h2>
               <p>{pet.description || "No description"}</p>
 
-              <p style={{ fontSize: 12, color: "#555" }}>
-                Location: {pet.latitude}, {pet.longitude}
-              </p>
+              <a href={pet.location_url} target="_blank" rel="noopener noreferrer">
+  📍 View on Google Maps
+</a>
+
 
               <p style={{ fontSize: 12, color: "#555" }}>
                 Posted: {new Date(pet.created_at).toLocaleString()}
