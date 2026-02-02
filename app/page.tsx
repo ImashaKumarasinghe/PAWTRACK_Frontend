@@ -38,28 +38,30 @@ export default async function Home() {
         <ul style={{ marginTop: 20 }}>
           {pets.map((pet) => (
             <li
-              key={pet.id}
-              style={{
-                border: "1px solid #ddd",
-                padding: 12,
-                marginBottom: 12,
-                borderRadius: 8,
-              }}
-            >
-              <h2 style={{ fontSize: 18, fontWeight: "bold" }}>
-                {pet.title} ({pet.species})
-              </h2>
-              <p>{pet.description || "No description"}</p>
+  key={pet.id}
+  style={{
+    border: "1px solid #ddd",
+    padding: 12,
+    marginBottom: 12,
+    borderRadius: 8,
+  }}
+>
+  <Link href={`/pets/${pet.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+    <h2 style={{ fontSize: 18, fontWeight: "bold" }}>
+      {pet.title} ({pet.species})
+    </h2>
+    <p>{pet.description || "No description"}</p>
+  </Link>
 
-              <a href={pet.location_url} target="_blank" rel="noopener noreferrer">
-  📍 View on Google Maps
-</a>
+  <a href={pet.location_url} target="_blank" rel="noopener noreferrer">
+    📍 View on Google Maps
+  </a>
 
+  <p style={{ fontSize: 12, color: "#555" }}>
+    Posted: {new Date(pet.created_at).toLocaleString()}
+  </p>
+</li>
 
-              <p style={{ fontSize: 12, color: "#555" }}>
-                Posted: {new Date(pet.created_at).toLocaleString()}
-              </p>
-            </li>
           ))}
         </ul>
         
