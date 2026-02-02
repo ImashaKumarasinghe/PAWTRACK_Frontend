@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { uploadFile } from "@/lib/supabase";
 
 export default function AddPetPage() {
   const router = useRouter();
@@ -10,6 +11,11 @@ export default function AddPetPage() {
   const [title, setTitle] = useState("");
   const [species, setSpecies] = useState("DOG");
   const [description, setDescription] = useState("");
+  
+  // 🖼️ Photo upload
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<string>("");
 
   // 🔹 Location fields
   const [locationUrl, setLocationUrl] = useState("");
@@ -18,6 +24,34 @@ export default function AddPetPage() {
   // UI states
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Handle photo selection
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        setError('Please select an image file');
+        return;
+      }
+      
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setError('Image size should be less than 5MB');
+        return;
+      }
+      
+      setPhotoFile(file);
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+      setError('');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +70,21 @@ export default function AddPetPage() {
     setLoading(true);
 
     try {
+      let photoUrl = null;
+      
+      // Upload photo to Supabase if provided
+      if (photoFile) {
+        setUploadProgress("Uploading photo...");
+        try {
+          photoUrl = await uploadFile('paw photos', photoFile);
+          setUploadProgress("Photo uploaded successfully!");
+        } catch (uploadErr: any) {
+          throw new Error(`Photo upload failed: ${uploadErr.message}`);
+        }
+      }
+
       // ✅ Send to backend
+      setUploadProgress("Saving pet details...");
       const res = await fetch("http://127.0.0.1:9000/pets", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -46,6 +94,7 @@ export default function AddPetPage() {
           description: description.trim() || null,
           location_url: locationUrl.trim(),
           location_text: locationText.trim() || null,
+          photo_url: photoUrl, // Add photo URL to the payload
         }),
       });
 
@@ -57,11 +106,13 @@ export default function AddPetPage() {
       await res.json();
 
       // ✅ Go back to home page so you can see the new pet
+      setUploadProgress("Success!");
       router.push("/");
       // Optional: force refresh data if needed
       router.refresh();
     } catch (err: any) {
       setError(err.message || "Something went wrong.");
+      setUploadProgress("");
     } finally {
       setLoading(false);
     }
@@ -73,7 +124,66 @@ export default function AddPetPage() {
       <p>This page will contain the pet form.</p>
 
       <form onSubmit={handleSubmit}>
-        {/* 🐾 Title */}
+        {/* �️ Photo Upload */}
+        <div style={{ marginBottom: 20 }}>
+          <label style={{ fontWeight: "bold", display: "block", marginBottom: 8 }}>
+            Pet Photo
+          </label>
+          
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handlePhotoChange}
+            style={{ 
+              width: "100%", 
+              padding: 10, 
+              border: "1px solid #ccc",
+              borderRadius: 4
+            }}
+          />
+          
+          {photoPreview && (
+            <div style={{ marginTop: 12 }}>
+              <img
+                src={photoPreview}
+                alt="Pet preview"
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: 300,
+                  borderRadius: 8,
+                  objectFit: "contain",
+                  border: "2px solid #e5e7eb"
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setPhotoFile(null);
+                  setPhotoPreview(null);
+                }}
+                style={{
+                  marginTop: 8,
+                  padding: "6px 12px",
+                  background: "#ef4444",
+                  color: "white",
+                  border: "none",
+                  borderRadius: 4,
+                  cursor: "pointer"
+                }}
+              >
+                Remove Photo
+              </button>
+            </div>
+          )}
+          
+          {uploadProgress && (
+            <p style={{ color: "#2563eb", marginTop: 8, fontSize: 14 }}>
+              {uploadProgress}
+            </p>
+          )}
+        </div>
+
+        {/* �🐾 Title */}
         <label style={{ fontWeight: "bold" }}>Title</label>
         <input
           type="text"
