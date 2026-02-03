@@ -8,6 +8,7 @@ type Pet = {
   description?: string | null;
   location_url: string;
   location_text?: string | null;
+  photo_url?: string | null;
   status: string;
   created_at: string;
 };
@@ -47,6 +48,19 @@ export default async function Home() {
   }}
 >
   <Link href={`/pets/${pet.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+    {pet.photo_url && (
+      <img
+        src={pet.photo_url}
+        alt={pet.title}
+        style={{
+          width: "100%",
+          maxHeight: 300,
+          objectFit: "cover",
+          borderRadius: 6,
+          marginBottom: 12,
+        }}
+      />
+    )}
     <h2 style={{ fontSize: 18, fontWeight: "bold" }}>
       {pet.title} ({pet.species})
     </h2>
