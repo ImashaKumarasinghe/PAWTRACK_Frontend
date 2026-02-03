@@ -45,9 +45,10 @@ export default function SaveButton({ petId }: { petId: number }) {
         throw new Error(msg);
       }
 
-      // ✅ 3) After saving, go back home and refresh list
-      router.push("/");
-      router.refresh();
+      // ✅ 3) After saving, go back home and refresh list and go to adapted page
+      router.push(`/adopted/${petId}`);
+         router.refresh();
+
     } catch (e: any) {
       setError(e.message || "Something went wrong");
     } finally {
