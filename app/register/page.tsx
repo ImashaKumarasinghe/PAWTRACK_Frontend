@@ -54,6 +54,7 @@ export default function RegisterPage() {
       setLoading(false);
     }
   }
+  
 
   return (
     <main style={{ maxWidth: 420, margin: "40px auto" }}>
@@ -104,7 +105,7 @@ export default function RegisterPage() {
           {loading ? "Creating account..." : "Register"}
         </button>
       </form>
-      router.push(`/login?email=${encodeURIComponent(form.email)}`);
+      
 
     </main>
   );
