@@ -19,7 +19,7 @@ export default function SaveButton({ petId }: { petId: number }) {
 
       if (!res.ok) {
         const msg = await res.text();
-        throw new Error(msg || "Failed to save pet");
+        throw new Error(msg || "Failed to adopt pet");
       }
 
       // After saving, go back home and refresh list
@@ -44,7 +44,7 @@ export default function SaveButton({ petId }: { petId: number }) {
           cursor: loading ? "not-allowed" : "pointer",
         }}
       >
-        {loading ? "Saving..." : "✅ Mark as Saved"}
+        {loading ? "Saving..." : "✅ Adopt Now"}
       </button>
 
       {error ? <p style={{ color: "red", marginTop: 8 }}>{error}</p> : null}
