@@ -14,7 +14,7 @@ type Pet = {
 };
 
 async function getPets(): Promise<Pet[]> {
-  const res = await fetch("http://127.0.0.1:9000/pets", {
+  const res = await fetch("http://127.0.0.1:8000/pets", {
     cache: "no-store", // always get latest data, no caching
   });
 

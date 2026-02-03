@@ -85,7 +85,7 @@ export default function AddPetPage() {
 
       // ✅ Send to backend
       setUploadProgress("Saving pet details...");
-      const res = await fetch("http://127.0.0.1:9000/pets", {
+      const res = await fetch("http://127.0.0.1:8000/pets", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

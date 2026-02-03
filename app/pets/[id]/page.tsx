@@ -14,7 +14,7 @@ type Pet = {
 };
 
 async function getPet(id: string): Promise<Pet> {
-  const res = await fetch(`http://127.0.0.1:9000/pets/${id}`, { cache: "no-store" });
+  const res = await fetch(`http://127.0.0.1:8000/pets/${id}`, { cache: "no-store" });
 
   if (!res.ok) {
     const text = await res.text();
