@@ -30,11 +30,15 @@ export default function Header() {
   return (
     <header
       style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 40,
         borderBottom: "1px solid #eee",
         padding: "14px 18px",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        backgroundColor: "white",
       }}
     >
       {/* Logo  */}
@@ -55,7 +59,7 @@ export default function Header() {
     priority
     style={{ borderRadius: "50%", objectFit: "cover" }}
   />
-  <span style={{ fontWeight: 700, fontSize: 18 }}>
+  <span style={{ fontWeight: 700, fontSize: 18, color: "#7b4a12" }}>
     PawTrack
   </span>
 </Link>
@@ -68,6 +72,7 @@ export default function Header() {
           style={{
             textDecoration: "none",
             fontWeight: isActive("/") ? 700 : 500,
+            color: "#7b4a12",
           }}
         >
           Home
@@ -79,6 +84,7 @@ export default function Header() {
           style={{
             textDecoration: "none",
             fontWeight: isActive("/adopted") ? 700 : 500,
+            color: "#7b4a12",
           }}
         >
           Adopted
@@ -91,7 +97,7 @@ export default function Header() {
             textDecoration: "none",
             padding: "8px 12px",
             borderRadius: 10,
-            background: "#111",
+            background: "#7b4a12",
             color: "white",
             fontWeight: 600,
           }}

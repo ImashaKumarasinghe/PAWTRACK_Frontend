@@ -1,0 +1,142 @@
+/* Background: soft cream + light brown */
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: transparent;
+}
+
+/* Card */
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: transparent;
+  border: none;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: none;
+  margin: 0 auto;
+}
+
+/* Title */
+.title {
+  margin: 0;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  color: #3a2513; /* deep brown */
+}
+
+/* Subtitle */
+.subtitle {
+  margin: 8px 0 12px;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(58, 37, 19, 0.7);
+}
+
+/* Error box */
+.error {
+  background: #fff1f1;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #b91c1c;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+/* Form grid */
+.form {
+  display: grid;
+  gap: 10px;
+}
+
+/* Inputs */
+.input {
+  width: 100%;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(123, 74, 18, 0.20);
+  background: #fff;
+  font-size: 13px;
+  outline: none;
+  color: #3a2513;
+}
+
+.input::placeholder {
+  color: rgba(58, 37, 19, 0.45);
+}
+
+.input:focus {
+  border-color: rgba(123, 74, 18, 0.45);
+  box-shadow: 0 0 0 4px rgba(123, 74, 18, 0.12);
+}
+
+/* Button - warm brown */
+.button {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #7b4a12, #5c350b);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.06s ease, opacity 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Footer text */
+.footer {
+  margin-top: 18px;
+  text-align: center;
+  color: rgba(58, 37, 19, 0.65);
+  font-size: 14px;
+}
+
+.link {
+  color: #7b4a12;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.videoWrapper {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.bgVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85) saturate(0.9);
+}
+
+/* Overlay to soften video */
+.videoOverlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    rgba(255, 248, 240, 0.85),
+    rgba(255, 255, 255, 0.92)
+  );
+  z-index: 0;
+}
