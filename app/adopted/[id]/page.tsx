@@ -38,8 +38,8 @@ export default function AdoptedPage() {
 
   return (
     <main style={{ maxWidth: 700, margin: "30px auto", padding: 16 }}>
-      <h1>✅ Pet Adopted Successfully!</h1>
-      <p>Thank you for helping a street pet 💛</p>
+       <h1>Adopted Pets</h1>
+      <p>Here you will show the adopted pets list (next step).</p>
 
       <img
         src={pet.photo_url}
