@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { apiPost } from "@/lib/api";
+import styles from "./register.module.css";
 
 type RegisterPayload = {
   full_name: string;
@@ -30,11 +31,11 @@ export default function RegisterPage() {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
 
-    // ✅ simple client-side validation (optional but helpful)
+    // ✅ simple client-side validation
     if (form.password !== form.confirm_password) {
       setError("Passwords do not match.");
       return;
@@ -54,16 +55,35 @@ export default function RegisterPage() {
       setLoading(false);
     }
   }
-  
 
   return (
-    <main style={{ maxWidth: 420, margin: "40px auto" }}>
-      <h1>Register</h1>
+  <main className={styles.page}>
+    {/* ✅ Background Video */}
+    <div className={styles.videoWrapper}>
+      <video
+        className={styles.bgVideo}
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/videos/pets-bg.mp4.mp4" type="video/mp4" />
+      </video>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div className={styles.videoOverlay} />
+    </div>
 
-      <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
+    <section className={styles.card}>
+      <h1 className={styles.title}>Create Account</h1>
+      <p className={styles.subtitle}>
+        Join PawTrack to help street pets find safe homes 🐾
+      </p>
+
+      {error && <div className={styles.error}>{error}</div>}
+
+      <form onSubmit={handleSubmit} className={styles.form}>
         <input
+          className={styles.input}
           placeholder="Full name"
           value={form.full_name}
           onChange={(e) => updateField("full_name", e.target.value)}
@@ -71,6 +91,7 @@ export default function RegisterPage() {
         />
 
         <input
+          className={styles.input}
           placeholder="Email"
           type="email"
           value={form.email}
@@ -79,6 +100,7 @@ export default function RegisterPage() {
         />
 
         <input
+          className={styles.input}
           placeholder="Phone number"
           value={form.phone_number}
           onChange={(e) => updateField("phone_number", e.target.value)}
@@ -86,6 +108,7 @@ export default function RegisterPage() {
         />
 
         <input
+          className={styles.input}
           placeholder="Password"
           type="password"
           value={form.password}
@@ -94,6 +117,7 @@ export default function RegisterPage() {
         />
 
         <input
+          className={styles.input}
           placeholder="Confirm password"
           type="password"
           value={form.confirm_password}
@@ -101,12 +125,19 @@ export default function RegisterPage() {
           required
         />
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} className={styles.button}>
           {loading ? "Creating account..." : "Register"}
         </button>
       </form>
-      
 
-    </main>
-  );
+      <p className={styles.footer}>
+        Already have an account?{" "}
+        <a href="/login" className={styles.link}>
+          Login here
+        </a>
+      </p>
+    </section>
+  </main>
+);
+
 }

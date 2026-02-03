@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { apiPost } from "@/lib/api";
+import styles from "./login.module.css";
 
 type LoginPayload = {
   email: string;
@@ -29,7 +30,7 @@ export default function LoginPage() {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
 
@@ -51,32 +52,61 @@ export default function LoginPage() {
   }
 
   return (
-    <main style={{ maxWidth: 420, margin: "40px auto" }}>
-      <h1>Login</h1>
+    <main className={styles.page}>
+      {/* ✅ Background Video */}
+      <div className={styles.videoWrapper}>
+        <video
+          className={styles.bgVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/videos/pets-bg.mp4.mp4" type="video/mp4" />
+        </video>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        <div className={styles.videoOverlay} />
+      </div>
 
-      <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
-        <input
-          placeholder="Email"
-          type="email"
-          value={form.email}
-          onChange={(e) => updateField("email", e.target.value)}
-          required
-        />
+      <section className={styles.card}>
+        <h1 className={styles.title}>Welcome Back</h1>
+        <p className={styles.subtitle}>
+          Login to continue helping street pets 🐾
+        </p>
 
-        <input
-          placeholder="Password"
-          type="password"
-          value={form.password}
-          onChange={(e) => updateField("password", e.target.value)}
-          required
-        />
+        {error && <div className={styles.error}>{error}</div>}
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <input
+            className={styles.input}
+            placeholder="Email"
+            type="email"
+            value={form.email}
+            onChange={(e) => updateField("email", e.target.value)}
+            required
+          />
+
+          <input
+            className={styles.input}
+            placeholder="Password"
+            type="password"
+            value={form.password}
+            onChange={(e) => updateField("password", e.target.value)}
+            required
+          />
+
+          <button type="submit" disabled={loading} className={styles.button}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        <p className={styles.footer}>
+          Don't have an account?{" "}
+          <a href="/register" className={styles.link}>
+            Register here
+          </a>
+        </p>
+      </section>
     </main>
   );
 }
