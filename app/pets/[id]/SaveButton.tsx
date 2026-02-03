@@ -10,19 +10,42 @@ export default function SaveButton({ petId }: { petId: number }) {
 
   async function handleSave() {
     setError("");
+
+    // ✅ 1) Check login when user clicks
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const res = await fetch(`http://127.0.0.1:9000/pets/${petId}/save`, {
-        method: "POST",
-      });
+      // ✅ 2) Send token in Authorization header
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/pets/${petId}/save`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!res.ok) {
-        const msg = await res.text();
-        throw new Error(msg || "Failed to adopt pet");
+        // Try to read FastAPI error nicely
+        let msg = "Failed to adopt pet";
+        try {
+          const data = await res.json();
+          msg = data?.detail || JSON.stringify(data);
+        } catch {
+          msg = await res.text();
+        }
+        throw new Error(msg);
       }
 
-      // After saving, go back home and refresh list
+      // ✅ 3) After saving, go back home and refresh list
       router.push("/");
       router.refresh();
     } catch (e: any) {
