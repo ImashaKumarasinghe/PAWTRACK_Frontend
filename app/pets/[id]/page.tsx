@@ -8,6 +8,7 @@ type Pet = {
   description?: string | null;
   location_url: string;
   location_text?: string | null;
+  photo_url?: string | null;
   status: string;
   created_at: string;
 };
@@ -40,6 +41,22 @@ export default async function PetDetailPage({
       <h1 style={{ fontSize: 26, fontWeight: "bold" }}>
         {pet.title} ({pet.species})
       </h1>
+
+      {pet.photo_url && (
+        <img
+          src={pet.photo_url}
+          alt={pet.title}
+          style={{
+            width: "100%",
+            maxHeight: 400,
+            objectFit: "contain",
+            borderRadius: 8,
+            marginTop: 16,
+            marginBottom: 16,
+            border: "1px solid #e5e7eb",
+          }}
+        />
+      )}
 
       <p style={{ marginTop: 10 }}>{pet.description || "No description"}</p>
 
