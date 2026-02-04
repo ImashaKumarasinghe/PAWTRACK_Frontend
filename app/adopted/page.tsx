@@ -14,22 +14,17 @@ type Pet = {
 };
 
 async function getAdoptedPets(): Promise<Pet[]> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/pets?status=ADOPTED`,
-    { cache: "no-store" }
-  );
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/pets?status=ADOPTED`,
+      { cache: "no-store" }
+    );
 
-  if (!res.ok) return [];
-  return res.json();
-}
-
-function statusStyle(status: string) {
-  const s = (status || "").toLowerCase();
-
-  if (s.includes("adopt"))
-    return { bg: "#e7f5ec", border: "#9fd8b2", text: "#1f6b3a" };
-
-  return { bg: "#f6f1ea", border: "#e7dacb", text: "#6b4a2f" };
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
 }
 
 export default async function AdoptedPage() {
