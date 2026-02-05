@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Header from "@/components/Header";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import ChatWidget from "@/components/ChatWidget";
+
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800"],
@@ -24,6 +26,8 @@ export default function RootLayout({
       <body className={poppins.className}>
         <Header />
         {children}
+        <ChatWidget />
+
       </body>
     </html>
   );
