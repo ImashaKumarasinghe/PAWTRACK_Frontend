@@ -57,6 +57,23 @@ export default async function AdoptedPage() {
     whiteSpace: "nowrap" as const,
   };
 
+  const statusStyle = (status: string) => {
+    const normalized = status?.toUpperCase?.() || "";
+    if (normalized === "ADOPTED") {
+      return { bg: "#e7f6ec", border: "#bfe3c9", text: "#1d6b3a" };
+    }
+
+    if (normalized === "RESCUED") {
+      return { bg: "#eef5ff", border: "#cfe1ff", text: "#2c5aa0" };
+    }
+
+    if (normalized === "PENDING") {
+      return { bg: "#fff3db", border: "#f2d3a7", text: "#9a5b13" };
+    }
+
+    return { bg: "#f6efe6", border: "#eadfce", text: "#6b4a2f" };
+  };
+
   return (
     <main
       style={{
